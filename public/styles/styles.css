@@ -1,0 +1,78 @@
+/* caixa para colocar o cliente */
+
+.my-mt1{
+
+    margin-top:250px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+/* botão */
+
+.my-button{
+
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+
+}
+
+/* caixa para reseber o link */
+
+.my-mt2{
+
+    margin-top:150px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+/*imagem de fundo*/
+body{
+
+    background-image: url(../imag/fundo-mapa.jpg);
+}
+
+.my-mt3{
+
+    margin-top:250px;
+}
+.sentrar1{
+
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+}
+.sentrar2{
+
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+
+}
+/*pagina do login*/
+.my-mt4{
+
+    margin-top:250px;
+    margin-left: 800px;
+    margin-right: 800px;
+}
+.my-mt5{
+
+    margin-top:20px;
+    margin-left: 800px;
+    margin-right: 800px;
+}
+
+.my-button2{
+
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+
+}
+
+.my-button3{
+    margin-top:20px;
+    margin-left: 200px;
+
+}
