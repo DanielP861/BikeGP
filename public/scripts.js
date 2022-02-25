@@ -85,3 +85,38 @@ function getPage(data){
       })
       .catch((error) => console.log(error));
 }
+
+function criarCliente(){
+
+  const nome = document.getElementById('nome').value
+  const MoradaRua = document.getElementById('rua').value
+  const MoradaNumero = document.getElementById('numero').value
+  const codigoPostal = document.getElementById('codigoPostal').value
+  const email = document.getElementById('email').value
+  const numTele = document.getElementById('tel').value
+  const nomeImpresa = document.getElementById('nomeImpresa').value
+  const utilizador = document.getElementById('Utilizador').value
+  const passe = document.getElementById('palavraPasse').value
+ 
+  let novoEquip ={
+     
+    nome :nome ,
+    MoradaRua : MoradaRua ,
+    MoradaNumero : MoradaNumero,
+    codigoPostal : codigoPostal,
+    email : email,
+    numTele : numTele,
+    nomeImpresa : nomeImpresa ,
+    utilizador : utilizador ,
+    passe : passe,
+  };
+  let options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(novoEquip),
+  };
+  fetch('http://localhost:3000/utilizador', options)
+  
+}
