@@ -45,7 +45,7 @@ exports.login = (req,res) => {
         let token = jwt.sign(payload, utilizador.private_key, options)
         const dadosUtilizador = {
             _id: utilizador._id,
-            nome: utilizador.nome,
+            nome: utilizador.utilizador,
             nivel: utilizador.nivel
         }
         return res.header('Authorization', token).status(200).json(dadosUtilizador)

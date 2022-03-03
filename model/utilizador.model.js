@@ -3,17 +3,18 @@ const mongoose = require('mongoose')
 const utilizador = mongoose.Schema({
 
     "nome" : {"type": "String"},
-    "MoradaRua" : {"type": "String"},
-    "MoradaNumero" : {"type": "String"},
+    "moradaRua" : {"type": "String"},
+    "moradaNumero" : {"type": "String"},
     "codigoPostal" : {"type": "String"},
     "email" : {"type": "String"},
     "numTele" : {"type": "String"},
-    "nomeImpresa" : {"type": "String"},
+    "nomeEmpresa" : {"type": "String"},
     "utilizador" : {"type": "String"},
     "passe" : {"type": "String"},
     "public_key" : {"type": "String"},
     "private_key" : {"type": "String"},
     "nivel" : {"type": "String"},
+    "aceite": {"type": "Boolean"},
     registration_date: {"type": Date, default:Date.now}
 })
 

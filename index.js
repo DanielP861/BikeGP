@@ -23,6 +23,8 @@ app.post('/page',authController.checkAuth,(req,res)=>{
        res.redirect('/clienteTB')
   else
        res.redirect('/dispositivo')
+  if(req.body.nivel != "cliente")
+  res.redirect('/registoCliente')
 })
 
 app.get('/clienteTB',(req,res)=>{
@@ -31,6 +33,10 @@ app.get('/clienteTB',(req,res)=>{
 
 app.get('/dispositivo',(req,res)=>{
   res.sendFile(path.join(__dirname,'./public/dispositivo.html'))
+})
+
+app.get('/registoCliente',(req,res)=>{
+  res.sendFile(path.join(__dirname,'./public/registoCliente.html'))
 })
 
 app.use(express.static('./public'));

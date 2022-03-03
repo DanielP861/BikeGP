@@ -14,15 +14,16 @@ router.post('/', (req,res)=>{
             let encPass = bcryptjs.hashSync(escape(req.body.passe,bcryptjs.genSaltSync(2)))
             newutilizador = new Utilizador({              
                 nome : req.body.nome,
-                MoradaRua :  req.body.MoradaRua,
-                MoradaNumero :  req.body.MoradaNumero,
+                moradaRua :  req.body.moradaRua,
+                moradaNumero :  req.body.moradaNumero,
                 codigoPostal :  req.body.codigoPostal,
                 email :  req.body.email,
                 numTele :  req.body.numTele,
-                nomeImpresa :  req.body.nomeImpresa,
+                nomeEmpresa :  req.body.nomeEmpresa,
                 utilizador : req.body.utilizador,
                 passe : encPass,
-                nivel : req.body.nivel                
+                nivel : 'cliente',
+                aceite : false,            
             })
             newutilizador.save()
             .then((resultado,error)=>{
@@ -41,5 +42,34 @@ router.post('/', (req,res)=>{
     })
     
 })
+
+router.get('/', (req,res)=>{
+    //procurare se o equipamento esite
+    Utilizador.find()
+    .exec()
+    .then((utilizadores,error)=>{    
+        if(error) res.json({msg: 'Ocoreu um erro na base de dados'})
+        if(utilizadores!=0){
+            let array = []
+            for(i in utilizadores){
+                let json = {
+                    _id : utilizadores[i]._id,
+                    nome: utilizadores[i].nome,
+                    nomeEmpresa: utilizadores[i].nomeEmpresa,
+                    nivel: utilizadores[i].nivel,
+                    aceite: utilizadores[i].aceite,
+                    
+                }
+                array.push(json)
+            }
+            res.json(array)
+        }
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+    
+})
+
 
 module.exports= router

@@ -86,37 +86,49 @@ function getPage(data){
       .catch((error) => console.log(error));
 }
 
-function criarCliente(){
+function criarUtilizador(){
 
   const nome = document.getElementById('nome').value
-  const MoradaRua = document.getElementById('rua').value
-  const MoradaNumero = document.getElementById('numero').value
+  const moradaRua = document.getElementById('rua').value
+  const moradaNumero = document.getElementById('numero').value
   const codigoPostal = document.getElementById('codigoPostal').value
   const email = document.getElementById('email').value
   const numTele = document.getElementById('tel').value
-  const nomeImpresa = document.getElementById('nomeImpresa').value
+  const nomeEmpresa = document.getElementById('nomeEmpresa').value
   const utilizador = document.getElementById('Utilizador').value
   const passe = document.getElementById('palavraPasse').value
  
-  let novoEquip ={
-     
+  let novoUtilizador ={
     nome :nome ,
-    MoradaRua : MoradaRua ,
-    MoradaNumero : MoradaNumero,
+    moradaRua : moradaRua ,
+    moradaNumero : moradaNumero,
     codigoPostal : codigoPostal,
     email : email,
     numTele : numTele,
-    nomeImpresa : nomeImpresa ,
+    nomeEmpresa : nomeEmpresa ,
     utilizador : utilizador ,
-    passe : passe,
-  };
+    passe : passe
+  }
+
   let options = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(novoEquip),
-  };
+    body: JSON.stringify(novoUtilizador),
+  }
+
   fetch('http://localhost:3000/utilizador', options)
+  .then(res => res.json())
+  .then(json => console.log(json))
+  .catch((error)=>{
+    console.log(error)
+  })
   
+
+}
+
+function adUtilizador(){
+
+
 }
