@@ -5,7 +5,6 @@ const bcryptjs = require("bcryptjs");
 
 
 router.post('/', (req,res)=>{
-    //procurare se o equipamento esite
     Utilizador.find({'utilizador': {$eq: req.body.utilizador}})
     .exec()
     .then((utilizador,error)=>{    
@@ -44,7 +43,6 @@ router.post('/', (req,res)=>{
 })
 
 router.get('/', (req,res)=>{
-    //procurare se o equipamento esite
     Utilizador.find()
     .exec()
     .then((utilizadores,error)=>{    
@@ -57,8 +55,7 @@ router.get('/', (req,res)=>{
                     nome: utilizadores[i].nome,
                     nomeEmpresa: utilizadores[i].nomeEmpresa,
                     nivel: utilizadores[i].nivel,
-                    aceite: utilizadores[i].aceite,
-                    
+                    aceite: utilizadores[i].aceite,       
                 }
                 array.push(json)
             }
@@ -67,6 +64,58 @@ router.get('/', (req,res)=>{
     })
     .catch(error=>{
         console.log(error)
+    })
+    
+})
+
+router.patch('/:_id', (req, res) => {
+    Utilizador.findOneAndUpdate({'_id': {$eq: req.params._id}}, {$set: {'aceite':true}},{new:true})
+    .exec()
+    .then((utilizador,error)=>{    
+        if(error) throw error
+        if(utilizador==0){
+            res.json({
+                type: 'success',
+                msg: 'Utilizador não encontrado'
+            })
+        }
+        else
+            res.json({
+                type:'success',
+                msg: 'Utilizador atualizado'
+            })
+    })
+    .catch((error)=>{
+        res.json({
+            type: 'error',
+            msg: 'Ocorreu um erro, tente mais tarde.'
+        })
+    })
+    
+})
+
+router.delete('/:_id', (req, res) => {
+    Utilizador.findOneAndDelete({'_id': {$eq: req.params._id}})
+    .exec()
+    .then((utilizador,error)=>{    
+        if(error) throw error
+        if(utilizador==0){
+            res.json({
+                type: 'success',
+                msg: 'Utilizador não encontrado'
+            })
+        }
+        else
+            res.json({
+                type:'success',
+                msg: 'Utilizador eliminado'
+            })
+    })
+    .catch((error)=>{
+        res.json({
+            type: 'error',
+            msg: 'Ocorreu um erro, tente mais tarde.'
+        })
     })
     
 })

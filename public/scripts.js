@@ -1,3 +1,4 @@
+
 function init(){
     getNavbarcli()
 }
@@ -128,7 +129,106 @@ function criarUtilizador(){
 
 }
 
-function adUtilizador(){
+function preencherTB(){
+  fetch('http://localhost:3000/utilizador')
+  .then(res => res.json())
+  .then(json => {
+    const tbPendentes = document.getElementById('pendentes')
+    const tbAceites = document.getElementById('aceites')
+    tbPendentes.innerHTML = ''
+    tbAceites.innerHTML = ''
+      for(i in json){
+        if (json[i].aceite == true) {
+          let _id = json[i]._id
+          let nome = json[i].nome
+          let empresa = json[i].nomeEmpresa
+          let nivel = json[i].nivel
+          tbAceites.innerHTML += `<tr>
+                                    <td>${nome}</td>
+                                    <td>${empresa}</td>
+                                    <td>${nivel}</td>
+                                    <td class="text-center">
+                                    <button
+                                        type="button" 
+                                        class="btn btn-success me-2"
+                                        style="width:100px;"> Ver mais                                      
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-danger"
+                                        style="width:100px;"
+                                        onclick="eliminar('${_id}');"
+                                        > Eliminar
+                                    </button>
+                                    </td>
+                                </tr>`
+        }
+        else if(json[i].aceite==false){
+          let _id = json[i]._id
+          let nome = json[i].nome
+          let empresa = json[i].nomeEmpresa
+          let nivel = json[i].nivel
+          tbPendentes.innerHTML += `<tr>
+                                    <td>${nome}</td>
+                                    <td>${empresa}</td>
+                                    <td>${nivel}</td>
+                                    <td class="text-center">
+                                    <button      
+                                        type="button" 
+                                        class="btn btn-success me-2"
+                                        style="width:100px;"
+                                        onclick="aceitar('${_id}');"
+                                        > Aceitar   
+                                                                           
+                                    </button>
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-danger"
+                                        style="width:100px;"
+                                        onclick="eliminar('${_id}');"
+                                        > Recusar
+                                    </button>
+                                    </td>
+                                </tr>`
+          
+
+        }
+      }
 
 
+
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
+}
+
+function aceitar(_id) {
+  let options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }
+  fetch('http://localhost:3000/utilizador/' + _id, options)
+    .then(res => res.json())
+    .then(json => {
+      alert(json.msg)
+      preencherTB()
+  })
+}
+
+function eliminar(_id) {
+  let options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    }
+  }
+  fetch('http://localhost:3000/utilizador/' + _id, options)
+    .then(res => res.json())
+    .then(json => {
+      alert(json.msg)
+      preencherTB()
+  })
 }
