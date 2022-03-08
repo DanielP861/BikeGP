@@ -17,7 +17,7 @@ function init(){
 
 
 function criarEquip(){
-    const cliente = document.getElementById('nome').value
+    const cliente = document.getElementById('cliente').value
     const idEquip = document.getElementById('idEquip').value
     let novoEquip ={
        
@@ -31,7 +31,22 @@ function criarEquip(){
       },
       body: JSON.stringify(novoEquip),
     };
-    fetch('http://localhost:3000/equipamento', options)
+  fetch('http://localhost:3000/equipamento', options)
+  
+}
+function preenchercli() {
+  fetch('http://localhost:3000/utilizador')
+    .then(res => res.json())
+    .then(json => {
+      const cliente = document.getElementById('cliente')
+      for (i in json) {
+        if (json[i].aceite == true) {
+          let nome = json[i].nome
+          cliente.innerHTML += `<option value="${json}">${nome}</option>`
+        }
+      }
+    })
+  
 }
 
 function fazerlogin(){
@@ -151,6 +166,7 @@ function preencherTB(){
                                     <button
                                         type="button" 
                                         class="btn btn-success me-2"
+                                        onclick="detalhe('${_id}');"
                                         style="width:100px;"> Ver mais                                      
                                     </button>
                                     <button 
@@ -230,5 +246,45 @@ function eliminar(_id) {
     .then(json => {
       alert(json.msg)
       preencherTB()
+  })
+}
+
+function detalhe(_id) {
+  console.log(_id)
+  fetch('http://localhost:3000/utilizador/' + _id)
+    .then(res => res.json())
+    .then(json => {
+      var modelWrap=null
+      if(modelWrap!==null){
+           modelWrap.remove()
+       }
+      modelWrap = document.createElement('div')
+      modelWrap.innerHTML = 
+          `<div class="modal">
+              <div class="modal-dialog modal-lg"  >
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Detalhe do utilizador:</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                      <div><b>Nome: </b>${json.msg.nome}</div>
+                      <div class="mt-3">Nome da empresa: ${json.msg.nomeEmpresa}</div>
+                      <div class="mt-3">Morada: ${json.msg.moradaRua} - ${json.msg.moradaNumero}</div>
+                      <div class="mt-3">Código Postal: ${json.msg.codigoPostal}</div>
+                      <div class="mt-3">Numero de telemóvel: ${json.msg.numTele}</div>
+                      <div class="mt-3">Email-: ${json.msg.email}</div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>`
+          document.body.append(modelWrap)
+          var modal = new bootstrap.Modal(modelWrap.querySelector('.modal'))
+          modal.show()
+      //alert(json.msg)
+      
   })
 }

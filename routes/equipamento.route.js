@@ -36,5 +36,37 @@ router.post('/', (req,res)=>{
         console.log(error)
     })
 })
+router.get('/', (req, res) => {
+    Utilizador.find()
+    .exec()
+    .then((utilizador,error)=>{    
+        if(error) throw error
+        if(utilizador==0){
+            res.json({
+                type: 'success',
+                msg: 'Utilizador não encontrado'
+            })
+        }
+        else {
+            let dados = {
+                _id: utilizador._id,
+                nome: utilizador.nome,
+                aceite: utilizador.aceite,
+            }
+            res.json({
+                type:'success',
+                msg:  console.log(dados)
+            })
+        }
+            
+    })
+    .catch((error)=>{
+        res.json({
+            type: 'error',
+            msg: 'Ocorreu um erro, tente mais tarde.'
+        })
+    })
+    
+})
 
 module.exports= router

@@ -10,7 +10,7 @@
     <title>Document</title>
     <script src="scripts.js"></script>
 </head>
-<body >
+<body onload="preenchercli()">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="./index.html">BIKEGP</a>
@@ -34,7 +34,7 @@
 
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" href="./login.html">Log aot</a>
+            <a class="nav-link active" href="./login.html">Logout</a>
           </li>
       </ul>
       </div>
@@ -46,8 +46,10 @@
       
         <div class="my-mt1">
           <label for="exampleInputEmail1" class="form-label">Nome do Cliente</label>
-          <input  type="text" class="form-control" id="nome" >
-         
+          <select class="form-select" aria-label="Default select example" id="clientes">
+            <option selected>Nome do cliente</option>
+            
+          </select>
         </div>
         <div class="my-mt2 mt-5">
           <label for="exampleInputPassword1" class="form-label">ID do Equipamento</label>

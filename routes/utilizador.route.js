@@ -8,7 +8,10 @@ router.post('/', (req,res)=>{
     Utilizador.find({'utilizador': {$eq: req.body.utilizador}})
     .exec()
     .then((utilizador,error)=>{    
-        if(error) res.json({msg: 'Ocoreu um erro na base de dados'})
+        if(error) res.json({
+            type:'success',
+            msg: 'Ocoreu um erro na base de dados'
+        })
         if(utilizador==0){
             let encPass = bcryptjs.hashSync(escape(req.body.passe,bcryptjs.genSaltSync(2)))
             newutilizador = new Utilizador({              
@@ -26,7 +29,10 @@ router.post('/', (req,res)=>{
             })
             newutilizador.save()
             .then((resultado,error)=>{
-                if(error) res.json({msg: 'Ocorreu um erro na criação'})
+                if(error) res.json({
+                    type:'success',
+                    msg: 'Ocorreu um erro na criação'
+                })
                 res.json(resultado)
             })
             .catch(error=>{
@@ -34,7 +40,10 @@ router.post('/', (req,res)=>{
             })
         }
         else
-        res.json({msg:'Utilizador existente'})
+            res.json({
+                type: 'success',
+                msg: 'Utilizador existente'
+            })
     })
     .catch(error=>{
         console.log(error)
@@ -68,7 +77,7 @@ router.get('/', (req,res)=>{
     
 })
 
-router.patch('/:_id', (req, res) => {
+router.put('/:_id', (req, res) => {
     Utilizador.findOneAndUpdate({'_id': {$eq: req.params._id}}, {$set: {'aceite':true}},{new:true})
     .exec()
     .then((utilizador,error)=>{    
@@ -110,6 +119,44 @@ router.delete('/:_id', (req, res) => {
                 type:'success',
                 msg: 'Utilizador eliminado'
             })
+    })
+    .catch((error)=>{
+        res.json({
+            type: 'error',
+            msg: 'Ocorreu um erro, tente mais tarde.'
+        })
+    })
+    
+})
+
+router.get('/:_id', (req, res) => {
+    console.log(req.params._id)
+    Utilizador.findOne({'_id': {$eq: req.params._id}})
+    .exec()
+    .then((utilizador,error)=>{    
+        if(error) throw error
+        if(utilizador==0){
+            res.json({
+                type: 'success',
+                msg: 'Utilizador não encontrado'
+            })
+        }
+        else {
+            let dados = {
+                nome: utilizador.nome,
+                nomeEmpresa: utilizador.nomeEmpresa,
+                numTele: utilizador.numTele,
+                moradaRua: utilizador.moradaRua,
+                moradaNumero: utilizador.moradaNumero,
+                email: utilizador.email,
+                codigoPostal: utilizador.codigoPostal,
+            }
+            res.json({
+                type:'success',
+                msg: dados
+            })
+        }
+            
     })
     .catch((error)=>{
         res.json({
