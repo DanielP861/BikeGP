@@ -17,14 +17,13 @@ function init(){
 
 
 function criarEquip(){
-    const cliente = document.getElementById('cliente').value
+    const cliente = document.getElementById('clientes').value
     const idEquip = document.getElementById('idEquip').value
     let novoEquip ={
-       
         cliente : cliente,
         idEquip: idEquip,
     };
-    let options = {
+  let options = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,18 +31,21 @@ function criarEquip(){
       body: JSON.stringify(novoEquip),
     };
   fetch('http://localhost:3000/equipamento', options)
+  .then(res => res.json())
+    .then(json => {   
+      alert(json.msg)
+    })
   
 }
 function preenchercli() {
-  fetch('http://localhost:3000/utilizador')
+  fetch('http://localhost:3000/equipamento')
     .then(res => res.json())
-    .then(json => {
-      const cliente = document.getElementById('cliente')
+    .then(json => {   
+      const clientes = document.getElementById('clientes')
       for (i in json) {
-        if (json[i].aceite == true) {
-          let nome = json[i].nome
-          cliente.innerHTML += `<option value="${json}">${nome}</option>`
-        }
+        let nome = json[i].nome
+        let _id = json[i]._id
+        clientes.innerHTML += `<option value="${_id}">${nome}</option>`
       }
     })
   
@@ -82,7 +84,8 @@ function fazerlogin(){
 }
 
 function getPage(data){
-    localStorage.setItem("nivel", data.nivel); 
+  localStorage.setItem("nivel", data.nivel); 
+  localStorage.setItem("_id", data._id)
     const obj = {
         nivel: localStorage.getItem('nivel')
     }

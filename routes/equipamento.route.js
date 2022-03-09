@@ -2,35 +2,38 @@ const express = require('express')
 const { route } = require('express/lib/application')
 const router = express.Router()
 const Equipamento = require('../model/equipamento.model')
+const Utilizador = require('../model/utilizador.model')
 
 
 router.post('/', (req,res)=>{
-
-    console.log(req.body)
     //procura se o equipamento esite
-    Equipamento.find({'idEquip': {$eq: req.body.idEquip}})
+    Equipamento.findOne({'idEquip': {$eq: req.body.idEquip}})
     .exec()
-    .then((equip,error)=>{
+    .then((equip, error)=>{
         if(error) res.json({msg: 'Ocoreu um erro na base de dados'})
-        if(equip== 0){
+        if (equip == null) {
+            console.log(equip)
             newEquip = new Equipamento({
                 idEquip: req.body.idEquip,
-                cliente: req.body.cliente,
+                idCliente: req.body.cliente,
                 lat: 0,
                 lon: 0
             })
             newEquip.save()
             .then((resultado,error)=>{
                 if(error) res.json({msg: 'Ocorreu um erro na criação'})
-                res.json(resultado)
+                res.json({msg: 'Equipamento associado ao cliente!'})
             })
             .catch(error=>{
                 console.log(error)
             })
             
         }
-        else
-        res.json({msg:'Equipamento existente'})
+        else {
+            console.log(equip)
+            res.json({msg:'Equipamento já associado a outro cliente'})
+        }
+            
     })
     .catch(error=>{
         console.log(error)
@@ -39,34 +42,25 @@ router.post('/', (req,res)=>{
 router.get('/', (req, res) => {
     Utilizador.find()
     .exec()
-    .then((utilizador,error)=>{    
-        if(error) throw error
-        if(utilizador==0){
-            res.json({
-                type: 'success',
-                msg: 'Utilizador não encontrado'
-            })
-        }
-        else {
-            let dados = {
-                _id: utilizador._id,
-                nome: utilizador.nome,
-                aceite: utilizador.aceite,
+    .then((utilizadores,error)=>{    
+        if(error) res.json({msg: 'Ocoreu um erro na base de dados'})
+        if(utilizadores!=0){
+            let array = []
+            for (i in utilizadores) {
+                if (utilizadores[i].aceite === true) {
+                    let json = {
+                        _id : utilizadores[i]._id,
+                        nome: utilizadores[i].nome
+                    }
+                    array.push(json)
+                }      
             }
-            res.json({
-                type:'success',
-                msg:  console.log(dados)
-            })
-        }
-            
+            res.json(array)
+        }          
     })
-    .catch((error)=>{
-        res.json({
-            type: 'error',
-            msg: 'Ocorreu um erro, tente mais tarde.'
-        })
+    .catch(error=>{
+        console.log(error)
     })
-    
 })
 
 module.exports= router
