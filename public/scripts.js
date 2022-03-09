@@ -291,3 +291,7 @@ function detalhe(_id) {
       
   })
 }
+
+function preencherTbCli() {
+  
+}
