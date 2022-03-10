@@ -12,15 +12,14 @@ router.get('/', (req, res) => {
         if(error) res.json({msg: 'Ocoreu um erro na base de dados'})
         if(Equipamento!=0){
             let array = []
-            for (i in Equipamento) {
-                if (Equipamento[i].idCliente == authController._id) {
+            for (i in Equipamento) {               
                     let json = {
                         idEquip : Equipamento[i].idEquip,
                         lat : Equipamento[i].lat,
-                        log : Equipamento[i].log
+                        lon : Equipamento[i].lon,
                     }
                     array.push(json)
-                }      
+                      
             }
             res.json(array)
         }          

@@ -296,15 +296,18 @@ function preencherTbCli() {
 
   fetch('http://localhost:3000/tbDispo')
   .then(res => res.json())
-  .then(json => { console.log(json)
+    .then(json => {
+      console.log(json)
+    
     const dispositivos = document.getElementById('dispositivos')
     dispositivos.innerHTML = ''
-      for(i in json){
-          let _id = json[i]._id
-          let idEquip = json[i].idEquip
-          let lat = json[i].lat
-          let log = json[i].log
-          dispositivos.innerHTML += `<tr>
+    for (i in json) {
+      if (json[i]._id == authController._id ) {
+        let _id = json[i]._id
+        let idEquip = json[i].idEquip
+        let lat = json[i].lat
+        let log = json[i].log
+        dispositivos.innerHTML += `<tr>
                                     <td>${idEquip}</td>
                                     <td>${lat}</td>
                                     <td>${log}</td>
@@ -318,7 +321,7 @@ function preencherTbCli() {
                                     </td>
                                 </tr>`
         
-        
+      }
       }
 
 
