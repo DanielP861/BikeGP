@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
         if(Equipamento!=0){
             let array = []
             for (i in Equipamento) {
-                if (Equipamento[i].idCliente === authController._id) {
+                if (Equipamento[i].idCliente == authController._id) {
                     let json = {
                         idEquip : Equipamento[i].idEquip,
                         lat : Equipamento[i].lat,
