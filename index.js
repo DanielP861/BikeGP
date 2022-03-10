@@ -13,6 +13,8 @@ app.use('/equipamento', require('./routes/equipamento.route'))
 //rota utilizador
 app.use('/utilizador', require('./routes/utilizador.route'))
 
+
+
 //rota login
 app.use('/login', require('./routes/login.route'))
 
@@ -36,8 +38,11 @@ app.get('/dispositivo',(req,res)=>{
 })
 
 app.get('/registoCliente',(req,res)=>{
-  res.sendFile(path.join(__dirname,'./public/registoCliente.html'))
+  res.sendFile(path.join(__dirname, './public/registoCliente.html'))
+  
 })
+//rota da tabela dispositivos
+app.use('/tbDispo', require('./routes/tbDispo.route'))
 
 app.use(express.static('./public'));
 

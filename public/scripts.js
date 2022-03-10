@@ -293,5 +293,39 @@ function detalhe(_id) {
 }
 
 function preencherTbCli() {
-  
+
+  fetch('http://localhost:3000/tbDispo')
+  .then(res => res.json())
+  .then(json => { console.log(json)
+    const dispositivos = document.getElementById('dispositivos')
+    dispositivos.innerHTML = ''
+      for(i in json){
+          let _id = json[i]._id
+          let idEquip = json[i].idEquip
+          let lat = json[i].lat
+          let log = json[i].log
+          dispositivos.innerHTML += `<tr>
+                                    <td>${idEquip}</td>
+                                    <td>${lat}</td>
+                                    <td>${log}</td>
+                                    <td class="text-center">
+                                    <button
+                                        type="button" 
+                                        class="btn btn-success me-2"
+                                        onclick="detalhe('${_id}');"
+                                        style="width:100px;"> Ver mais                                      
+                                    </button>
+                                    </td>
+                                </tr>`
+        
+        
+      }
+
+
+
+  })
+  .catch((error)=>{
+    console.log(error)
+  })
 }
+  
