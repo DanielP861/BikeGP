@@ -345,13 +345,15 @@ function mapa(_id) {
               <div class="modal-dialog modal-lg"  >
                   <div class="modal-content">
                       <div class="modal-header">
-                          <h5 class="modal-title">Detalhe do utilizador:</h5>
+                          <h5 class="modal-title">Mapa:</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <img src="http://maps.googleapis.com/maps/api/staticmap?center=-22.912869,-43.2289638
-                      &zoom=15&markers=color:red|-22.909410,-43.2329548&size=250x250">
+                      <div class="modal-body">
+                      <img src="http://maps.googleapis.com/maps/api/staticmap?center=${json.lat},${json.lon}
+                      &zoom=15&markers=color:red|${json.lat},${json.lon}&size=250x250">
                       <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                      </div>
                       </div>
                   </div>
               </div>
@@ -363,4 +365,3 @@ function mapa(_id) {
       
   })
 }
-  
