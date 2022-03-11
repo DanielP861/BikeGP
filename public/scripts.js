@@ -319,7 +319,7 @@ function preencherTbCli() {
                                       <button
                                           type="button" 
                                           class="btn btn-success me-2"
-                                          onclick="detalhe('${_id}');"
+                                          onclick="mapa('${_id}');"
                                           style="width:100px;"> Ver mais                                      
                                       </button>
                                       </td>
@@ -329,5 +329,38 @@ function preencherTbCli() {
     .catch((error)=>{
       console.log(error)
     })
-    }
+}
+function mapa(_id) {
+  console.log(_id)
+  fetch('http://localhost:3000/utilizador/' + _id)
+    .then(res => res.json())
+    .then(json => {
+      var modelWrap=null
+      if(modelWrap!==null){
+           modelWrap.remove()
+       }
+      modelWrap = document.createElement('div')
+      modelWrap.innerHTML = 
+          `<div class="modal">
+              <div class="modal-dialog modal-lg"  >
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title">Detalhe do utilizador:</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <img src="http://maps.googleapis.com/maps/api/staticmap?center=-22.912869,-43.2289638
+                      &zoom=15&markers=color:red|-22.909410,-43.2329548&size=250x250">
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                      </div>
+                  </div>
+              </div>
+          </div>`
+          document.body.append(modelWrap)
+          var modal = new bootstrap.Modal(modelWrap.querySelector('.modal'))
+          modal.show()
+      //alert(json.msg)
+      
+  })
+}
   

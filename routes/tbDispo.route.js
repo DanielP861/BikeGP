@@ -30,4 +30,42 @@ router.post('/', authController.checkAuth, (req, res) => {
     })
 })
 
+router.get('/:_id', (req, res) => {
+    console.log(req.params._id)
+    Utilizador.findOne({'_id': {$eq: req.params._id}})
+    .exec()
+    .then((utilizador,error)=>{    
+        if(error) throw error
+        if(utilizador==0){
+            res.json({
+                type: 'success',
+                msg: 'Utilizador não encontrado'
+            })
+        }
+        else {
+            let dados = {
+                nome: utilizador.nome,
+                nomeEmpresa: utilizador.nomeEmpresa,
+                numTele: utilizador.numTele,
+                moradaRua: utilizador.moradaRua,
+                moradaNumero: utilizador.moradaNumero,
+                email: utilizador.email,
+                codigoPostal: utilizador.codigoPostal,
+            }
+            res.json({
+                type:'success',
+                msg: dados
+            })
+        }
+            
+    })
+    .catch((error)=>{
+        res.json({
+            type: 'error',
+            msg: 'Ocorreu um erro, tente mais tarde.'
+        })
+    })
+    
+})
+
 module.exports = router;
