@@ -5,25 +5,26 @@ const Equipamento = require('../model/equipamento.model')
 const Utilizador = require('../model/utilizador.model')
 const authController = require('../controller/auth.controller')
 
-router.get('/', (req, res) => {
+router.post('/', authController.checkAuth, (req, res) => {
     Equipamento.find()
     .exec()
-    .then((Equipamento,error)=>{    
+    .then((equipamentos,error)=>{    
         if(error) res.json({msg: 'Ocoreu um erro na base de dados'})
-        if(Equipamento!=0){
+        if(equipamentos!=0){
             let array = []
-            for (i in Equipamento) {               
-                    let json = {
-                        idEquip : Equipamento[i].idEquip,
-                        lat : Equipamento[i].lat,
-                        lon : Equipamento[i].lon,
-                    }
-                    array.push(json)
-                      
+            for (i in equipamentos) {   
+                if (equipamentos[i].idCliente == req.body._id) {
+                    let json = { 
+                        idEquip : equipamentos[i].idEquip, 
+                        lat : equipamentos[i].lat,
+                        lon : equipamentos[i].lon,   
+                    } 
+                    array.push(json)  
+                }                
             }
             res.json(array)
         }          
-    })
+    }) 
     .catch(error=>{
         console.log(error)
     })

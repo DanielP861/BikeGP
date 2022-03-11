@@ -13,8 +13,6 @@ app.use('/equipamento', require('./routes/equipamento.route'))
 //rota utilizador
 app.use('/utilizador', require('./routes/utilizador.route'))
 
-
-
 //rota login
 app.use('/login', require('./routes/login.route'))
 
@@ -44,15 +42,16 @@ app.get('/registoCliente',(req,res)=>{
 //rota da tabela dispositivos
 app.use('/tbDispo', require('./routes/tbDispo.route'))
 
+app.use('/atualizaGPS', require('./routes/atualizaGPS.route'))
+
 app.use(express.static('./public'));
 
 app.get('/',  (req, res) => {
   res.sendFile(path.join(__dirname,'./public/index.html'))
 })
-const port= process.env.PORT || 3000
 
-//define PORT
-const PORT = 3000;
+const port = 3000
+
 
 //set listen to PORT
-app.listen(process.env.PORT || PORT, () => console.log('Listening on port ' + PORT));
+app.listen(port, () => console.log('Listening on port ' + port));
